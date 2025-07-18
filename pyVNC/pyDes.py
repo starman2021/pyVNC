@@ -1192,8 +1192,11 @@ class des(_baseDes):
         if isinstance(data, list):
             if isinstance(data[0], bytes):
                 data = b"".join(data)
+            elif all(isinstance(c, int) and 0 <= c <= 255 for c in data):
+                print("Something unexpect, but still useable.")
+                pass # good
             else:
-                raise Exception("__String_to_BitList: Unexpected input")
+                raise Exception("__String_to_BitList: Unexpected input: got", type(data), type(data[0]))
         elif isinstance(data, bytes):
             pass  # good
         else:
